@@ -3,15 +3,23 @@ import csv
 import re
 datasource = 'comments_toxic.train'
 rowname = 'comment_text'
-with open('/Users/rafa/spell_checker/data/'+datasource, newline='') as csvfile:
+outf = 'tblob_temp'
+
+rows_corrected = ''
+
+with open('/Users/rafa/spell_checker/data/'+datasource, newline='') as csvfile :
      reader = csv.DictReader(csvfile)
      for row in reader:
-     	print(row[rowname])
-     	blob = TextBlob(row[rowname])
-     	corrected = blob.correct()
-     	print(corrected)
-     	#match user id  of offensive language data set
-     	
-	
-	#line = "@X_XPDOTJDOT: Damn near gotta protect my tweets.. stalkers being annoying you got that dope dick. Drive these bitches loco"
-	#print(re.sub(r'(\@(.*)\:)','', line))
+          blob = TextBlob(row[rowname])
+          row ['comment_text'] = str(blob.correct())
+          rows_corrected += row['id'] + row['comment_text'] + row ['toxic']+'\n'
+          #print (rows_corrected)
+
+with open('results_spell_checker.csv', 'w') as csv_file:
+    writer = csv.writer(csv_file, delimiter=',')
+    writer.writerow(['id','comment_text', 'toxic'])
+    for key, value in rows_corrected.items():
+       writer.writerow([key, value])           
+
+#print(pbp)
+
