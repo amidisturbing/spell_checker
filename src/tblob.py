@@ -20,7 +20,5 @@ with open('/Users/rafa/spell_checker/data/results_spell_checker.csv', 'w') as cs
     writer.writerow(['id','comment_text', 'toxic'])
     for item in rows_corrected:
       print(item)
-      writer.writerow(item)           
-
-#print(pbp)
+      writer.writerow(item)
 
