@@ -6,19 +6,16 @@ rowname = 'comment_text'
 outf = 'tblob_temp'
 
 rows_corrected = ''
-
-with open('/Users/rafa/spell_checker/data/'+datasource, newline='') as csvfile :
-     reader = csv.DictReader(csvfile)
-     for row in reader:
-          blob = TextBlob(row[rowname])
-          row ['comment_text'] = str(blob.correct())
-          rows_corrected += row['id'] + row['comment_text'] + row ['toxic']+'\n'
-          print (rows_corrected)
-
-with open('/Users/rafa/spell_checker/data/results_spell_checker.csv', 'w') as csv_file:
-    writer = csv.writer(csv_file, delimiter=',')
-    writer.writerow(['id','comment_text', 'toxic'])
-    for item in rows_corrected:
-      print(item)
-      writer.writerow(item)
-
+r = ''
+print('Opening and reading file...')
+with open('/Users/rafa/spell_checker/data/'+datasource) as csvfile, open('/Users/rafa/spell_checker/data/results_spell_checker.csv', 'w') as csv_file :
+  reader = csv.DictReader(csvfile)
+  fieldnames = ['id','comment_text','toxic']
+  writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+  writer.writeheader()
+  for row in reader:
+    print('Processing next row...')
+    blob = TextBlob(row[rowname])
+    row ['comment_text'] = str(blob.correct())
+    print('Writing row...')
+    writer.writerow({'id': row['id'], 'comment_text': row['comment_text'], 'toxic':row ['toxic']})
