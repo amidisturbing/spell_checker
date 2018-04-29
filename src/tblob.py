@@ -13,13 +13,14 @@ with open('/Users/rafa/spell_checker/data/'+datasource, newline='') as csvfile :
           blob = TextBlob(row[rowname])
           row ['comment_text'] = str(blob.correct())
           rows_corrected += row['id'] + row['comment_text'] + row ['toxic']+'\n'
-          #print (rows_corrected)
+          print (rows_corrected)
 
 with open('/Users/rafa/spell_checker/data/results_spell_checker.csv', 'w') as csv_file:
     writer = csv.writer(csv_file, delimiter=',')
     writer.writerow(['id','comment_text', 'toxic'])
-    for key, value in rows_corrected.items():
-       writer.writerow([key, value])           
+    for item in rows_corrected:
+      print(item)
+      writer.writerow(item)           
 
 #print(pbp)
 
