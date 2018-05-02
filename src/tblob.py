@@ -1,8 +1,8 @@
 from textblob import TextBlob
 import csv
 import re
-datasource = 'comments_toxic.short'
-rowname = 'comment_text'
+datasource = 'comments_toxic_short.csv'
+rowname = 'comment'
 outf = 'tblob_temp'
 
 rows_corrected = ''
